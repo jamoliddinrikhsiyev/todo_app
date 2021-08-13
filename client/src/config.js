@@ -1,8 +1,11 @@
 "use strict";
-const host = require("./lib/getIp.js")(true);
-const PORT = process.env.PORT || 5050;
+import getIPAddress from "./lib/getIp.js";
+import process from 'process';
 
-module.exports = {
+const PORT = process.env.PORT || 5050;
+const host = getIPAddress(true);
+
+export{
 	host,
 	PORT
 }

@@ -1,5 +1,6 @@
-const getIPAddress = ({ internal }) => {
-	const { networkInterfaces } = require('os')
+import { networkInterfaces } from 'os';
+
+export default function getIPAddress({ internal }){
 	const nets = networkInterfaces()
 	let networks = Object.keys(nets)
 	let internalNetwork = 'localhost'
@@ -15,6 +16,3 @@ const getIPAddress = ({ internal }) => {
 	}
 	return internal ? internalNetwork : externalNetwork
 }
-
-
-module.exports = getIPAddress

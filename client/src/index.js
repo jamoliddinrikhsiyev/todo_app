@@ -1,22 +1,23 @@
 "use strict";
 //Get all packages and configuration files
-const express = require('express');
-const {host, PORT} = require('./config.js');
-const { mySendFile } = require('./controllers/controll.js')
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import {host, PORT} from './config.js';
+import { mySendFile } from './controllers/controll.js'
+import path from 'path';
+const __dirname = path.resolve("./");
 
 const app = express();
 //app configurations
 
-app.use( express.static(path.join(__dirname, 'assets')) );
+app.use( express.static(path.join(__dirname, 'src', 'assets')) );
+app.use( cors() )
 
 //app routes
 
-mySendFile('/',)
+app.get( '/', mySendFile(path.join(__dirname, 'src', 'views', 'index.html') ) );
 
-app.get('/login', (req, res)=>{
-	res.sendFile(path.join(__dirname, 'views', 'login.html'))
-})
+app.get( '/login', mySendFile(path.join(__dirname,'src', 'views', 'login.html') ) );
 
 //start server
 

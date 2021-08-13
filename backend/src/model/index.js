@@ -6,7 +6,7 @@ const {
 
 //Get database connection
 
-const res = async (query) => {
+const res = async (query, $1) => {
 	const client = await pool.connect()
 	const result = await client.query(query)
 	client.release()
@@ -16,20 +16,33 @@ const res = async (query) => {
 const myQueries = {
 	allUsers: `
 		SELECT
-			users.user_id,
-			users.user_name,
+			user_id,
+			user_name,
 			CASE
-				WHEN users.Privilege = 1 THEN 'Admin'
-				WHEN users.Privilege = 0 THEN 'User'
+				WHEN privilege = 1 THEN 'Admin'
+				WHEN privilege = 0 THEN 'User'
 			END AS privilege,
 			CASE 
-				WHEN users.is_deleted = 0 THEN 'false'
+				WHEN is_deleted = 0 THEN 'false'
 				ELSE 'true'
-			END AS is_deleted,
-			tasks.task_text
+			END AS is_deleted
+		FROM users`,
+	User: `
+		SELECT
+			user_id,
+			user_name,
+			CASE
+				WHEN privilege = 1 THEN 'Admin'
+				WHEN privilege = 0 THEN 'User'
+			END AS privilege,
+			CASE 
+				WHEN is_deleted = 0 THEN 'false'
+				ELSE 'true'
+			END AS is_deleted
 		FROM users
-		INNER JOIN tasks USING(user_id)`,
-	allTasks:`
+		WHERE user_id = $1
+	`,
+	allTasks: `
 		SELECT
 			tasks.task_id,
 			tasks.user_id,

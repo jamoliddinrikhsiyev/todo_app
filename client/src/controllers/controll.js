@@ -1,11 +1,11 @@
 'use strict'
 
-function mySendFile(rt, pth){
-	app.get(rt, (req, res)=>{
+function mySendFile(pth){
+	return (req, res)=>{
 		res.sendFile(pth)
-	})
+	}
 }
 
-module.exports = {
+export{
 	mySendFile
 }
