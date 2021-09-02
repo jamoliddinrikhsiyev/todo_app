@@ -16,9 +16,14 @@ CREATE TABLE tasks (
 	task_id serial NOT NULL,
 	user_id int NOT NULL,
 	task_text varchar(1256) NOT NULL,
-	task_date varchar(128) NOT NULL,
+	task_add_date varchar(128) NOT NULL,
+	task_deadline varchar(128) NOT NULL DEFAULT 'THE TASK DEADLINE IS UNDEFINED!',
 	task_status smallint NOT NULL
 );
+
+
+
+--#Only tests
 
 --#INSERT INFO
 --#INSERT TO USERS
@@ -32,6 +37,12 @@ INSERT INTO users (
 INSERT INTO users (
 	user_name,
 	password
+)VALUES('test', 'test')
+RETURNING user_id;
+
+INSERT INTO users (
+	user_name,
+	password
 )VALUES
 ('Jamoliddin', crypt('1111', gen_salt('bf') ) );
 
@@ -40,10 +51,10 @@ INSERT INTO users (
 INSERT INTO tasks (
 	user_id,
 	task_text,
-	task_date,
+	task_add_date,
 	task_status
 )VALUES
-(2, 'Test task from root user', 'test', 1),
+(1, 'Test task from root user', 'test', 1),
 (2, 'gadfsg', 'test', 1),
 (2, 'safdgfdffgagsdf', 'aaaa', 1);
 
@@ -60,8 +71,19 @@ FROM tasks
 INNER JOIN users USING(user_id)
 WHERE user_id = 1;
 
-SELECT 10*5;
+--	#INSERT AND RETURNING
 
+INSERT INTO users (
+	user_name,
+	password
+)VALUES
+( $1, crypt($2, gen_salt('bf') ) )
+RETURNING user_id;
 
-ALTER TABLE users
-ALTER COLUMN user SET
+--	#Alter table
+
+--	#Update
+
+UPDATE tasks
+SET task_status = 0
+WHERE user_id = 2 AND task_id = 1;

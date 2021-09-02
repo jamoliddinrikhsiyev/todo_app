@@ -1,5 +1,6 @@
 const logButton = document.querySelector('.logButton');
 const passInput = document.querySelector('.passInput');
+const logInput = document.querySelector('.logInput');
 const openPass = document.querySelector('.openPass');
 
 ;(() => {

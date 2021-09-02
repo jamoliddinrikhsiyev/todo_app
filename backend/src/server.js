@@ -4,8 +4,6 @@ const {
 	ApolloServer
 } = require('apollo-server');
 
-const chalk = require('chalk')
-
 const { typeDefs } = require('./model/schema.js')
 
 const { resolvers } = require('./model/resolvers.js')
@@ -21,5 +19,5 @@ const server = new ApolloServer({
 server.listen().then(({
 	url
 }) => {
-	console.log( chalk.bold.bgRed.white(`🚀  Server ready at ${url}`));
+	console.log( `🚀  Server ready at ${url}`);
 });

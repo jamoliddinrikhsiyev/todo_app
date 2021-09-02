@@ -26,8 +26,8 @@ body{
 	flex-direction: column;
 	align-items: center;
 	color: white;
-	width: 350px;
-	height: 500px;
+	width: 50%;
+	height: 80%;
 	background-color: #000;
 }
 
@@ -35,7 +35,7 @@ body{
 	display: inline-flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 20px;
+	margin-top: 8%;
 }
 
 .login input{
@@ -84,7 +84,7 @@ body{
 .container h1{
 	display: inline-block;
 	font-family: 'Black Ops One', sans-serif;
-	margin-top: 100px;
+	margin-top: 40%;
 }
 
 .dropBox{
