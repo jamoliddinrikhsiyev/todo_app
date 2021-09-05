@@ -1,3 +1,34 @@
+/*
+	#Resolvers >
+		Query > 
+			Users >
+				UserId
+				UserName
+				isDeleted
+				Privilege
+				UserTasks >
+					Tasks >
+						TaskId
+						TaskText
+						TaskDate
+						TaskStatus
+			Tasks >
+				TaskId
+				TaskText
+				TaskDate
+				TaskStatus
+		Mutation >
+			newUser >
+				token
+			newTask >
+				Task
+				Status
+			setTask
+				Task
+				Status
+*/
+"use strict";
+
 const {
 	res,
 	myQueries
@@ -52,24 +83,45 @@ const resolvers = {
 		newUser: async (_, args) => {
 			let response = await res(myQueries.allUsers);
 
-			async function checkUser(users){
-				let b = false;
-				for(let i of users){
-					if( i.user_name == args.username) b = true;
+			async function checkUser( users, password){
+				if( users && !password){
+					let b = false;
+					for(let i of users){
+						if( i.user_name == args.username) b = true;
+					}
+					return b;
 				}
-				return b;
+				
+				else if ( users && password){
+					let response = await res(myQueries.searchUser, [args.username, args.password]);
+					if( response[0] ){
+						return await response;
+					}else if( !response[0]){
+						return null;
+					}
+				}
 			}
 
-			if(await checkUser(await response) === false){
-				if(args.status == "test"){
-					let token = jwt.sign({user_id: 012}, varPassword);
-					return token
-				}else if(args.status == "create"){
+			if(args.status == "test"){
+				let token = jwt.sign({user_id: 0}, varPassword);
+				return token
+			}
+			
+			else if(args.status == "login"){
+				let res = await checkUser(args.username, args.password);
+				if( await res ){
+					let token = jwt.sign({user_id: await res}, varPassword);
+					return await token;
+				}else return null;
+			}
+			
+			else if( args.status == "create"){
+				if(await checkUser(await response) === false){
 					let response = await res(myQueries.newUser, [args.username, args.password]);
 					let token = jwt.sign({user_id: await response[0].user_id}, varPassword);
 					return await token;
-				}
-			}else return null;
+				}else return null;
+			}
 		},
 		newTask: async (_, args) => {
 			if(args.status == "test"){
@@ -108,76 +160,3 @@ const resolvers = {
 module.exports = {
 	resolvers
 };
-
-//return await res( myQueries.newUser, [ user.username, user.password ])
-
-
-
-
-
-
-
-
-
-
-/*
-Users: {
-	UserId: (user) => user.user_id,
-	UserName: (user) => user.user_name,
-	isDeleted: (user) => user.is_deleted,
-	Privilege: (user) => user.privilege,
-	UserTasks: async (user) => {
-		const result = await res(myQueries.allTasks);
-		return result.filter((task) => task.user_id === user.user_id);
-	}
-},
-Tasks: {
-	TaskId: (task) => task.task_id,
-	TaskText: (task) => task.task_text,
-	TaskDate: (task) => task.task_add_date,
-	TaskStatus: (task) => task.task_status
-},
-Mutation: {
-	addUser: async (p, args) => {
-		async function check_user(users, elem){
-			for(let i of users){
-				if(i.user_name === elem.username) return null;
-			}
-			return await res( myQueries.newUser, [elem.username, elem.password] ) 
-		}
-
-		let allUsers = await res(myQueries.allUsers);
-
-		return check_user(allUsers, args);
-	}
-},
-newUser: {
-	token: (user) => {
-		if(user){
-			return jwt.sign( { userId: user[0] }, privateKey );
-		}else{
-			return  "ERROR: THIS USERNAME ALREDY EXIST;"
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-
-

@@ -100,7 +100,13 @@ const myQueries = {
 		SET task_text = $1
 		WHERE user_id = $2 AND task_id = $3
 		RETURNING *
-	`	
+	`,
+	searchUser: `
+		SELECT 
+			user_id
+		FROM users
+		WHERE user_name = $1 AND password = $2
+	`
 };
 
 module.exports = {
