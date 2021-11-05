@@ -22,6 +22,9 @@ CREATE TABLE tasks (
 );
 
 
+DROP TABLE users;
+DROP TABLE tasks;
+
 
 --#Only tests
 

@@ -1,22 +1,20 @@
 "use strict";
 //Get all packages
-const {
-	pool
-} = require('../config.js')
+const { pool } = require("../config.js");
 
 //Get database connection
 
 const res = async (query, arg) => {
-	const client = await pool.connect();
-	let result;
-	if(arg) result = await client.query(query, arg );
-	else result = await client.query(query);
-	client.release();
-	return result.rows;
+  const client = await pool.connect();
+  let result;
+  if (arg) result = await client.query(query, arg);
+  else result = await client.query(query);
+  client.release();
+  return result.rows;
 };
 
 const myQueries = {
-	allUsers: `
+  allUsers: `
 		SELECT
 			user_id,
 			user_name,
@@ -29,7 +27,7 @@ const myQueries = {
 				ELSE 'true'
 			END AS is_deleted
 		FROM users`,
-	user: `
+  user: `
 		SELECT
 			user_id,
 			user_name,
@@ -45,7 +43,7 @@ const myQueries = {
 		FROM users
 		WHERE user_id = $1
 	`,
-	allTasks: `
+  allTasks: `
 		SELECT
 			task_id,
 			user_id,
@@ -57,7 +55,7 @@ const myQueries = {
 				ELSE 'saved'
 			END AS task_status
 		FROM tasks`,
-	tasks: `
+  tasks: `
 		SELECT
 			tasks.task_id,
 			tasks.user_id,
@@ -71,14 +69,14 @@ const myQueries = {
 		INNER JOIN users USING(user_id)
 		WHERE user_id = $1 AND tasks.task_status != 0
 	`,
-	newUser: `
+  newUser: `
 		INSERT INTO users (
 			user_name,
 			password
 		)VALUES 
 		( $1 , $2 )
 		RETURNING user_id, user_name, password`,
-	newTask: `
+  newTask: `
 		INSERT INTO tasks (
 			user_id,
 			task_text,
@@ -89,27 +87,31 @@ const myQueries = {
 		( $1, $2, $3, $4, 1)
 		RETURNING tasks.task_id, tasks.user_id, tasks.task_text, tasks.task_add_date, tasks.task_deadline, tasks.task_status
 	`,
-	deleteTask: `
+  deleteTask: `
 		UPDATE tasks
 		SET task_status = 0
 		WHERE user_id = $1 AND task_id = $2
 		RETURNING task_status 
 	`,
-	setTaskText: `
+  setTaskText: `
 		UPDATE tasks
 		SET task_text = $1
 		WHERE user_id = $2 AND task_id = $3
 		RETURNING *
 	`,
-	searchUser: `
+  searchUser: `
 		SELECT 
 			user_id
 		FROM users
 		WHERE user_name = $1 AND password = $2
-	`
+	`,
+};
+
+let t = async () => {
+  console.log(await res("SELECT * from tasks"));
 };
 
 module.exports = {
-	res,
-	myQueries
+  res,
+  myQueries,
 };

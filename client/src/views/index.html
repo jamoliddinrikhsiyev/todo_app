@@ -1,64 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- my links and scripts -->
+    <link rel="stylesheet" href="/css/normalize-css.css" />
+    <link rel="stylesheet" href="/css/font.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- my links and scripts -->
-	<link rel="stylesheet" href="/css/normalize-css.css">
-	<link rel="stylesheet" href="/css/font.css">
-	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/css/styles.css">
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-	
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	
-	<title>TodoApp</title>
-</head>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-<body>
-	<header>
-		<div class="wrapper">
-			<p class="head_text">Hello</p>
-			<button class="serach_button" type="button"><img src="/img/magnifying-white.png" alt="o"
-				width="30" height="30"></button>
-		</div>
-	</header>
-	<div class="myContainer">
-		<table class="centered">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Text</th>
-					<th>Date</th>
-					<th>Check</th>
-					<th>Set</th>
-					<th>Delete</th>
-				</tr>
-			</thead>
-			
-			<tbody class="myTable">
-				
-			</tbody>
-		</table>
-	</div>
-	<div class="taskForm">
-		<form>
-			<label class="firstLabel">
-				<input class="taskText" type="text" required placeholder="plese enter task text...">
-			</label>
-			<label class="lastLabel">
-				<input class="taskDate" type="date" min="2018-01-01" required>
-				<input class="taskTime" type="time" required>
-			</label>
-			<button class="send" type="submit">Add</button>
-		</form>
-	</div>
-</body>
+    <title>TodoApp</title>
+  </head>
 
-<script src="/js/main.js"></script>
+  <body>
+    <header>
+      <div class="wrapper">
+        <p class="head_text">Hello</p>
+        <button class="serach_button" type="button">
+          <img src="/img/magnifying-white.png" alt="o" width="30" height="30" />
+        </button>
+      </div>
+    </header>
+    <div class="myContainer">
+      <table class="centered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Text</th>
+            <th>Date</th>
+            <th>Check</th>
+            <th>Set</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
 
+        <tbody class="myTable"></tbody>
+      </table>
+    </div>
+    <div class="taskForm">
+      <form>
+        <label class="firstLabel">
+          <input
+            class="taskText"
+            type="text"
+            required
+            placeholder="plese enter task text..."
+          />
+        </label>
+        <label class="lastLabel">
+          <input class="taskDate" type="date" min="2018-01-01" required />
+          <input class="taskTime" type="time" required />
+        </label>
+        <button class="send" type="submit">Add</button>
+      </form>
+    </div>
+  </body>
+
+  <script src="/js/userConfig.js"></script>
+
+  <script src="/js/main.js"></script>
 </html>
